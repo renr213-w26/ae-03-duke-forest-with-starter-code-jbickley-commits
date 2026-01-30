@@ -36,11 +36,22 @@ duke_forest |>
 
 ```{r}
 #| label: price-garage
-
-# add code here
+duke_forest |>
+  mutate(garage = if_else(str_detect(parking, "Garage"),   "Garage", "No garage")) |>  
+ggplot(aes(x = price, fill = garage)) + 
+  geom_histogram(binwidth = 100000)+
+  facet_wrap(~garage) +
+  theme_bw() + 
+  labs(
+    x = "Price",
+    y= "Count",
+    title = "Histrogram of House Prices with Garages and Without")
+  
 ```
 
-Add narrative here...
+From the histogram we can see that having a garage and no garage appear to have very similar modes, with a majority of density being around the \$500,000 bin. However, we also see that that there is more density of higher priced homes with a garage, and over double the amount above \$1M. There are also a lot more homes under \$500,000 available without a garage, and on average homes with garage have higher prices.
+
+
 
 ::: callout-important
 Now is a good time to render, commit, and push.
@@ -65,12 +76,21 @@ Once again, data visualization skills to the rescue!
     -   Claim 3: Bigger and more expensive houses tend to be newer ones than smaller and cheaper ones.
 
 ```{r}
-#| label: price-area
-
-# add code here
+duke_forest |>
+ggplot(aes(x = price, y = area, color = year_built)) + 
+  geom_point()+
+  theme_bw() + 
+  geom_smooth(se = FALSE)+
+  labs(
+    x = "Price",
+    y= "Area",
+    title = "Histrogram of House Prices with Garages and Without")
+  
+```
 ```
 
-Add narrative here...
+From the graph we can see that on average larger homes are associated with larger prices. We cannot see or determine if newer homes are priced higher, they is a relative mix with older homes being some of the most expensive. We also cannot determine if bigger and more expensive homes tend to be newer; newer homes appear to actuall ybe smaller on average, but there is a notable outlier with the largest home being in relativly new. 
+
 
 ::: callout-important
 Now is a good time to render, commit, and push.
