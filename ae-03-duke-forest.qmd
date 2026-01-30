@@ -36,11 +36,22 @@ duke_forest |>
 
 ```{r}
 #| label: price-garage
-
-# add code here
+duke_forest |>
+  mutate(garage = if_else(str_detect(parking, "Garage"),   "Garage", "No garage")) |>  
+ggplot(aes(x = price, fill = garage)) + 
+  geom_histogram(binwidth = 100000)+
+  facet_wrap(~garage) +
+  theme_bw() + 
+  labs(
+    x = "Price",
+    y= "Count",
+    title = "Histrogram of House Prices with Garages and Without")
+  
 ```
 
-Add narrative here...
+From the histogram we can see that having a garage and no garage appear to have very similar modes, with a majority of density being around the \$500,000 bin. However, we also see that that there is more density of higher priced homes with a garage, and over double the amount above \$1M. There are also a lot more homes under \$500,000 available without a garage, and on average homes with garage have higher prices.
+
+
 
 ::: callout-important
 Now is a good time to render, commit, and push.
